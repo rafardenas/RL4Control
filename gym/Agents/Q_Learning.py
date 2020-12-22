@@ -22,11 +22,7 @@ class Q_agent():
         self.states = states
         self.qsa_pairs = qsa_pairs
         self.policy = policy
-<<<<<<< HEAD
         self.total_reward = 0
-=======
-
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
 
     def state_discretizer(self, s, v): #going to be inefficient
         for i in self.states:
@@ -41,16 +37,11 @@ class Q_agent():
         return tuple((s, v))
 
     def learn(self, iterations):
-<<<<<<< HEAD
         s = self.env.reset()
-=======
-        s = env.reset()
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
         s = self.state_discretizer(s[0], s[1])
         self.N = 0
         #print(s) 
         
-<<<<<<< HEAD
         
         for i in range(iterations):
             self.env.render()
@@ -59,21 +50,11 @@ class Q_agent():
             action = self.policy[s]
             #print(action)
             ns, r, done, _ = self.env.env.step(action) #act and observe
-=======
-        for i in range(iterations):
-            env.render()
-            self.N += 1
-            alpha = 1 / self.N
-            action = policy[s]
-            #print(action)
-            ns, r, done, _ = env.env.step(action) #act and observe
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
             p = np.random.uniform()
             ns = self.state_discretizer(ns[0], ns[1]) #push the obs into an interval between states
             #print(ns) 
 
             if p > self.eps: #exploit
-<<<<<<< HEAD
                 self.qsa_pairs[s][action] = (1 - alpha) * self.qsa_pairs[s][action] + alpha * (r + self.gamma * self.qsa_pairs[ns][np.argmax(self.qsa_pairs[s])]) 
                 self.policy[s] =  np.argmax(self.qsa_pairs[s]) #replacing action for best current action
             else: #explore
@@ -96,16 +77,6 @@ class Q_agent():
             s = self.state_discretizer(s[0], s[1])
             while not done:
                 ns, r, done, _ = env.env.step()
-=======
-                qsa_pairs[s][action] = (1 - alpha) * qsa_pairs[s][action] + alpha * (r + self.gamma * qsa_pairs[ns][np.argmax(qsa_pairs[s])]) 
-                policy[s] =  np.argmax(qsa_pairs[s]) #replacing action for best current action
-            else: #explore
-                qsa_pairs[s][action] = (1 - alpha) * qsa_pairs[s][action] + alpha * (r + self.gamma * qsa_pairs[ns][np.random.choice(3)]) #select random action
-
-            s = ns
-        print(alpha)
-        env.close()
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
 
 
 env = gym.make("MountainCar-v0")
@@ -115,24 +86,17 @@ positions = np.linspace(env.env.min_position, env.env.max_position, 8) #discreti
 states = list(product(positions, [0,1])) #tuples: (discretised positions, neg or positive vel)
 qsa_pairs = {i:[0 for i in range(3)] for i in states}
 
-<<<<<<< HEAD
 #another alpha (recall that it has to tend to 0 in the limit):
 
 
-=======
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
 policy = {i:np.random.choice(3) for i in states} #random initial policy     
 MrQ = Q_agent(env, gamma, states, qsa_pairs, policy, eps=1/3)
 
 for i in range(50):
-<<<<<<< HEAD
     MrQ.learn(500)
 
 
-run_episode(env, policy)
-=======
-    MrQ.learn(300)
->>>>>>> 2b9222742a4bc9c8074193e804402de0540cba79
+#run_episode(env, policy)
 
 
 print(policy)

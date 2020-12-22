@@ -14,7 +14,8 @@ from collections import defaultdict
 if "../" not in sys.path:
     sys.path.append("../") 
 
-matplotlib.style.use('ggplot')
+
+#matplotlib.style.use('ggplot')
 
 env = gym.make('Blackjack-v0')
 
@@ -93,7 +94,7 @@ def mc_prediction_first_visit(policy, env, num_episodes, discount_factor=1):
 
 
 #####################################
-###     MC First Visit Control w e-soft policy
+###     MC First Visit Control with e-soft policy
 #####################################
 
 
@@ -108,11 +109,16 @@ def esoft_policy(state, policy = None, eps = 1/6):
         else:
             return policy[state]
             
-    
+def e_soft_policy2(Q, state, eps = 1/6):
+    A = np.zeros(env.action_space.n) * 1 + eps/env.action_space.n 
+    arg = np.argmax(Q[state])
+    A[arg] += (1-eps)
+    return A
+
     
 def mc_fv_control(policy, env, num_episodes, discount_factor=1):
     """
-    MC first visit control algo. using e-soft policies to estimate optimal policy
+    MC first visit control algo. using e-soft policies to estimate optimal policy. Implemented as the pseudocode of the book page 101
     
     Args:
         policy: A function that maps an observation to action probabilities.
@@ -127,11 +133,12 @@ def mc_fv_control(policy, env, num_episodes, discount_factor=1):
         
 
 
-    returns_sum = defaultdict(list)
-    returns_count = defaultdict(list)
+    returns_sum = defaultdict(lambda: np.zeros(env.action_space.n))
+    returns_count = defaultdict(lambda: np.zeros(env.action_space.n))
     
     # The final value function
     Q = defaultdict(list)
+    Q = defaultdict(lambda: np.zeros(env.action_space.n))
     P = defaultdict(int)
     
     for i_episode in range(1, num_episodes + 1):
@@ -145,7 +152,9 @@ def mc_fv_control(policy, env, num_episodes, discount_factor=1):
         episode = []
         state = env.reset()
         for t in range(100):
-            action = policy(state,P)
+            probs = policy(Q,state)
+            #action = policy(state,P)
+            action = np.random.choice(np.arange(len(probs)), p=probs)
             next_state, reward, done, _ = env.step(action)
             episode.append((state, action, reward))        #Store the action in a tuple
             if done:
@@ -161,12 +170,6 @@ def mc_fv_control(policy, env, num_episodes, discount_factor=1):
             first_occurence_idx = [i for i,x in enumerate(episode) if x[0] == state_action[0]]
             # Sum up all rewards since the first occurance
             G = sum([x[2]*(discount_factor**i) for i,x in enumerate(episode[first_occurence_idx[0]:])])
-            # Calculate average return for this state over all sampled episodes
-            if state_action[0] not in Q:
-                Q[state_action[0]] = [0,0]
-                returns_sum[state_action[0]] = [0,0]
-                returns_count[state_action[0]] = [0,0]
-            
             returns_sum[state_action[0]][state_action[1]] += G
             returns_count[state_action[0]][state_action[1]] += 1.0
             Q[state_action[0]][state_action[1]] = returns_sum[state_action[0]][state_action[1]] / returns_count[state_action[0]][state_action[1]]
@@ -179,5 +182,5 @@ def mc_fv_control(policy, env, num_episodes, discount_factor=1):
 
 #Uncomment to run Policy iteration with MC 
 
-#Q,Opt_P = mc_fv_control(esoft_policy, env, num_episodes= 100000)
-#sorted(Q.items(), key = lambda x: x[1]) #sorting by value
+#Q,Opt_P = mc_fv_control(e_soft_policy2, env, num_episodes= 500000)
+#print(sorted(Q.items(), key = lambda x: x[1][0])) #sorting by value
