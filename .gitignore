@@ -1,3 +1,9 @@
+#vs things
+
 .vscode/*
 .vscode
 trial_vi.py
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
