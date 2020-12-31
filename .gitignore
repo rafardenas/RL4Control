@@ -3,6 +3,7 @@
 .vscode/*
 .vscode
 trial_vi.py
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

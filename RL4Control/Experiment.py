@@ -78,7 +78,8 @@ class Experiment:
             r = self.env.reward(xt[:,:,ei]) #[movements, state, episode] for the whole episode
             reward[ei] = np.sum(r)          #summing for reward of the whole episode
             #change this to one method "learn"
-            self.agent.Incremental(xt[:,:,ei], c_hist[:,ei], r)
+            #self.agent.Incremental(xt[:,:,ei], c_hist[:,ei], r) #for MC
+            self.agent.learn(xt[:,:,ei], c_hist[:,ei], r) #for q learning
             #print(xt[:,:,ei])
             #print(c_hist[:,ei])
             """
