@@ -2,9 +2,9 @@
 #27.12.2020
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
-
 import scipy.integrate as scp
 import numpy as np
+import matplotlib.pyplot as plt
 
 def discrete_env(state, modulus, s, stochasticity = True):
     """
@@ -103,3 +103,51 @@ for i in range(steps_[0]):
     states.append(current_state)
     
 
+
+##################
+# Plotting functions
+
+
+
+
+def plot_rew_validation(rewards, show = True):
+    plt.figure(figsize=(5,5))
+    plt.plot(np.arange(len(rewards)), rewards)
+    plt.axhline(y= rewards.mean(), c = "green")   
+    plt.title("Validation reward")
+    if show:
+        plt.show()
+
+def plot_epsilon(experiment, show = True):
+    epss = experiment.epsilons
+    plt.figure(figsize=(5,5))
+    plt.plot(np.arange(len(epss)), epss)
+    plt.title("Epsilon")
+    plt.xlabel("Episode Number")
+    if show:
+        plt.show()
+
+def plot_max_rew(experiment, show = True):
+    max_rewards = experiment.max_rewards
+    plt.figure(figsize=(5,5))
+    plt.plot(np.arange(len(max_rewards)), max_rewards)
+    plt.title("Max reward")
+    if show:
+        plt.show()
+
+def plot_min_rew(experiment, show = True):
+    min_rewards = experiment.min_rewards
+    plt.figure(figsize=(5,5))
+    plt.plot(np.arange(len(min_rewards)), min_rewards)
+    plt.title("Min reward")
+    if show:
+        plt.show()
+
+def plot_violin_actions(validation, show = True):
+    control_actions = validation.control_actions
+    fig, ax1 = plt.subplots(figsize=(5,5))
+    ax1.set_title('Control actions')
+    ax1.set_ylabel('Nitrate inflow rate')
+    ax1.violinplot(control_actions)
+    if show:
+        plt.show()
