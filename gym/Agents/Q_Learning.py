@@ -57,8 +57,6 @@ class Q_agent():
         return action
     
 
-
-
     def learn(self, iterations):
         """The inner loop is the actions we take, in other words, the duration of the episode."""
         for e in range(self.episodes):
@@ -132,8 +130,9 @@ steps = 8
 
 positions = np.round((np.linspace(env.env.min_position, env.env.max_position, steps)), 2) #discretise positions
 vel = np.round((np.linspace(-env.env.max_speed, env.env.max_speed, steps)), 2) #discretise vel
-states = list(product(positions, [0,1])) #tuples: (discretised positions, neg or positive vel)
-states = list(product(positions, vel)) #tuples: (discretised positions, neg or positive vel)
+# # uncomment for consider only position (cross prod) neg or pos velocity as state
+#states = list(product(positions, [0,1])) #tuples: (discretised positions, neg or positive vel) 
+states = list(product(positions, vel)) #tuples: (discretised positions in intervals, for vel: same setting as positions)
 qsa_pairs = {i:[0 for i in range(3)] for i in states}
 training_episodes = 100
 

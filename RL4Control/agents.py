@@ -165,35 +165,37 @@ class Q_Learning(Agent):
         return best_Q
 
 
-        
-    def Q_learn(self, state, action, reward):
+
+
+    def Q_learn(self, current_state, next_state, action, reward):
         r"""
         Off-policy control, Temporal difference learning (TD(0))
+        Updating ONLINE!
         -------
         Params:
-            state(tuple): current state of the system
-            action(tuple): action(s) taken
-            reward(tuple): reward(s) 
+            current state(tuple): current state of the system, its value will be updated
+            next_state (tuple): state where the agent ended up after taking action a
+            action(tuple): action taken
+            reward(tuple): reward received because of the transition 
         """
-        #Loop through the states forward, does it make a difference like in MC?? YES! But why??
         
-        for i in range(0, self.movements[0] - 1):
             #Using different gamma in T state
             #For TD target, we don't have to actually TAKE the best action i.e. integrate using the "best" possible action and getting a reward, instead,
-            #we take the value as if we had taken the action, and then follow the current policy. Basically off policy learning
-            idx = action[i]
-            self.dcount[tuple(state[i])][int(idx)] += 1
-            next_state =  state[i + 1]
-            TD_target = reward[i+1] + self.disc1 * self.Q_max(next_state)
-            alpha = self.lr / self.dcount[tuple(state[i])][int(idx)]        
-            Q = self.d[tuple(state[i])][int(idx)]
-            TD_error = TD_target - Q
-            self.d[tuple(state[i])][int(idx)] = Q + alpha * TD_error
+            #we take the action value as if we had taken the action, and then follow the current policy. Basically off policy learning
+
+        self.dcount[tuple(current_state)][int(action)] += 1
+        TD_target = reward + self.disc1 * self.Q_max(next_state)
+        alpha = self.lr / self.dcount[tuple(current_state)][int(action)]        
+        Q = self.d[tuple(current_state)][int(action)]
+        TD_error = TD_target - Q
+        self.d[tuple(current_state)][int(action)] = Q + alpha * TD_error
+
         return
 
     def double_Q(self, state, action, reward):
         r"""
-        Double Q learning
+        PENDING TO IMPLEMENT
+        Double Q learning.
         -------
         Params:
             state(tuple): current state of the system

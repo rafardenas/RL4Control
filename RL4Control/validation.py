@@ -16,15 +16,16 @@ class validation_experiment(object):
         episodes(int): Number of training epochs
         xi(int): Rate of decay for epsilon value. See utils.py
         """
-    def __init__(self, env, agent, controls, episodes, xi):
+    def __init__(self, env, agent, controls, episodes, xi, noise=False):
         self.env = env
         self.agent = agent
         self.controls = controls
         self.episodes = episodes
         self.xi = xi
+        self.noise = noise
         movements = int(self.env.tf/float(self.env.dt))
         self.control_actions = np.zeros((episodes * movements))
-    
+
     def simulation(self):
         r"""
         Using defined environment. In a loop until the end of the episode, using the learned policy
@@ -58,8 +59,10 @@ class validation_experiment(object):
                 ode.set_integrator('lsoda', nsteps=3000)                         
                 ode.set_initial_value(current_state[:x0.shape[0]],dt)
                 ode.set_f_params(ctrl[s,ei])                                     
-                current_state = list(ode.integrate(ode.t + dt))                  
-                current_state = discrete_env(np.array(current_state), self.agent.modulus, s + 2)
+                current_state = list(ode.integrate(ode.t + dt))
+
+                noisy = np.random.normal(0, 0.125, size = len(current_state)) if self.noise else 0                  
+                current_state = discrete_env(np.array(current_state) + noisy, self.agent.modulus, s + 2, self.agent.state_UB)
                 xt[s+1,:,ei]  = current_state                                    
                 tt[s+1]       = (s+1)*dt          
                 control_actions[ei * s] = ctrls[action_indx]

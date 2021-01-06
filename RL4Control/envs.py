@@ -24,9 +24,9 @@ class Environment:
         self.parameters = parameters
         self.steps = steps 
         self.tf = tf
-        self.x0 = x0  #same number of decimals as value dict
+        self.x0 = x0
         self.control = control
-    
+                                #same number of decimals as value dict
 
         
 class Model1(Environment):
@@ -61,5 +61,10 @@ class Model1(Environment):
     def reward(self,state):
         "Reward function for Model 1. Nice to have: Be modifiable"
         reward = [100 * s[0] - s[1] for s in state]
+        return reward
+    
+    def single_reward(self, state):
+        "Reward function for Model 1. for a single state"
+        reward = 100 * state[0] - state[1]
         return reward
 
