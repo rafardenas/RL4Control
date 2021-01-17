@@ -24,11 +24,11 @@ state_UB = np.array([5, 1000])  # state space upper bound
 
 # Agent definitions: num_actions, eps_prob, alpha, discount
 num_actions = 15                                # number (range) of actions available to agent
-episodes_train    = 10000
+episodes_train    = 300000
 
 disc1 = np.array([0.85])                        # discount factor in back-allocation
 disc2 = np.array([0.95])                        # discount factor in agent learning
-xi_ = np.array([0.5])                             # Epsilon greedy definition (from experiment)
+xi_ = np.array([0.3])                             # Epsilon greedy definition (from experiment)
 
 # Experiment defintions: env, agent, controls, episodes
 controls          = np.linspace(0,7,num_actions)       # defining possible control actions
@@ -59,7 +59,7 @@ def Plotting(data, nrows, bracket, pNo_mean, agent_name, axis = None, xi = None,
         plt.figure(figsize =(15,7.5))
         plt.xlabel('Training eps',  fontsize=28)
         plt.ylabel('avg reward / ' + str(bracket)+ ' epochs', fontsize=28)
-        plt.title("Training. eps_decay = {}; lr = {}".format(xi[0], xi[1]), fontsize=20)
+        plt.title("Training. eps_decay = {}".format(xi), fontsize=20)
         plt.scatter(np.linspace(0,len(data),nrows), data, label= 'Mean R over 1000 epochs')
         plt.tick_params(labelsize=24)
         if save_plot:
@@ -71,7 +71,7 @@ def Plotting(data, nrows, bracket, pNo_mean, agent_name, axis = None, xi = None,
 # running experiment
 def single_run(save_agent = True, save_plot = False):
     env                 = Model1(params, steps_, tf, x0, controls)                  # calling environment
-    agent               = Q_Learning(steps_, num_actions, modulus, "Q_learning" ,state_UB, lr = 1, disc1 = 0.85, disc2 = 0.95) 
+    agent               = Monte_Carlo(steps_, num_actions, modulus, "MC" ,state_UB, lr = 7, disc1 = 0.85, disc2 = 0.95) 
     agent_name = str(agent.learning_algo) + "_" + str(time)
     experiment          = Experiment(env, agent, controls, episodes_train, xi_[0], noise=True)  # calling training experiment
     reward_training, d  = experiment.simulation()                               
@@ -82,7 +82,7 @@ def single_run(save_agent = True, save_plot = False):
     Plotting(reward_train_mean, nrows, bracket, agent_name, agent_name, xi=xi_[0], save_plot = save_plot)
 
 
-#single_run(save_agent=False, save_plot= False)
+single_run(save_agent=False, save_plot= False)
 
 
 #run the following function to make a 2x2 grid of reward plots based on different decays rates
@@ -111,6 +111,6 @@ def grid(save_plot = False):
     plt.savefig('RL4Control/Assets/' + str(1) + '_' + str(agent_name) +'.png')
     plt.show()
 
-grid()
+#grid()
 
 

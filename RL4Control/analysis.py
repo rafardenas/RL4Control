@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 from envs import Model1
 from validation import validation_experiment
 import pickle
-from utils import *
+from Utils.utils import *
+from Utils.plot_utils import *
 from datetime import datetime
 time = datetime.now().strftime('%m%d_%H%M')
 sys.path.append('../')
