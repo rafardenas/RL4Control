@@ -17,8 +17,8 @@ class Lin_config():
     soft_epsilon      = 0
 
     # hyper params
-    nsteps_train       = 10000
-    nsteps_eval        = 1000
+    nsteps_train       = 2
+    nsteps_eval        = 0
     batch_size         = 32
     buffer_size        = 1000
     swap_sch           = 2000
