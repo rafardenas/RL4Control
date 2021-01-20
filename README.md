@@ -1,5 +1,5 @@
 # RL4Control
-#### Reinforcement Learning agents for control of Chemical Processes
+#### Control of Chemical Processes with RL
 
 Reinforcement Learning has sparked the interest of awesome minds around the world and in the last decade huge advacements have been made. There are still awesome oportunities in fields that have not been as heavily addressed as, for example, robotics or videogames, namely, the "classical" industries: Chemical, manufacturing, etc.
 
