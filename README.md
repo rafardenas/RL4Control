@@ -10,7 +10,7 @@ Also, commonly used algorithms and techniques are available, (Deep Q Network, ex
 
 The long term vision of this library is to serve as a reference of RL in chemical engineering and a vehicle to distribute the breakthroughs of RL in Chemical Engineering among the ML community.
 
-If you found an error or want to contibute, please reach out!.
+If you find an error or would like to contibute, please reach out!.
 
 
 
