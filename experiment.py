@@ -1,11 +1,11 @@
 #Experiment
-#Core script for simulation, define inputs such as number of control actions, starting state, granularity of the discretisation (modulus), etc.
+#Core script for simulation -for tabular RL agents-, define inputs such as number of control actions, starting state, granularity of the discretisation (modulus), etc.
 import os
 import gym
 import sys
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
-from utils import discrete_env, eps_decay
+from Utils.utils import discrete_env, eps_decay
 import scipy.integrate as scp
 import numpy as np
 import pickle

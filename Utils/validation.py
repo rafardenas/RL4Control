@@ -1,8 +1,8 @@
 #4.01.2020
-#Validation experiments
+#Validation experiments while training
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
-from utils import discrete_env, eps_decay
+from utils import *
 import scipy.integrate as scp
 import numpy as np
 

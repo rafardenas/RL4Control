@@ -1,20 +1,31 @@
-import os
-import gym
-import numpy as np
-import logging
-import time
-import sys
+#Deep Q network implementation
+#First part towards the complete implementation of the paper by Mnih (2015)
 
-import torch
-from torch import nn
-import torch.nn.functional as F
+import logging
+import os
+import sys
+import time
+
+import gym
 import matplotlib.pyplot as plt
-from deep_utils import Linearexp
-from test_env import EnvTest
+import numpy as np
+import torch
+import torch.nn.functional as F
+from torch import nn
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from config.linearDQN import Lin_config
-from Utils.utils import *
+from envs.test_env import EnvTest
+from Utils.deep_utils import Linearexp
 from Utils.plot_utils import *
+from Utils.utils import *
 from Utils.xpreplay import xpreplay
+
+#################################################
+############Pending: Set 'done' flag for terminal states
+##################################################
 
 
 class NN(nn.Module):
@@ -24,7 +35,7 @@ class NN(nn.Module):
         self.linear = nn.Linear(batch_size, num_actions, bias=True)
         self.loss_function = nn.functional.mse_loss
         self.optimizer = torch.optim.SGD([{'params' : self.parameters(), 'lr' : 1, 'initial_lr' : 1, 'final_lr' : 0.001}])
-        self.scheduler = torch.optim.lr_scheduler.LambdaLR(self.optimizer, decay_func, last_epoch= 0 , verbose=False)
+        self.scheduler = torch.optim.lr_scheduler.LambdaLR(self.optimizer, decay_func, last_epoch= 0)
 
     def forward(self, x):
         output = self.linear(x)
@@ -104,13 +115,8 @@ class DQN():
             v = self.est_net(s)[0, action]"""
 
         with torch.no_grad():
-            #print(self.target_net(n_s_batch).max(1)[0])
             max_q = rewards_batch + self.config.gamma * self.target_net(n_s_batch).max(1)[0]
-            #v = self.est_net(s)[0, action]
-        #print(self.est_net(states_batch))
-        #print(actions_batch.reshape(1,-1))
-        #print(actions_batch.shape)
-        #print(self.est_net(states_batch).gather(dim=1, index=actions_batch))
+
         loss = self.est_net.loss_function(max_q.unsqueeze_(-1), self.est_net(states_batch).gather(dim=1, index=actions_batch)).float()
         loss.backward()
         self.est_net.optimizer.step()

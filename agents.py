@@ -1,5 +1,8 @@
-#RL for control, agents
+#RL for control, tabular agent implementation
+# Monte Carlo and Q-learning implementations are available
+
 #27.12.2020
+
 
 import numpy as np
 from collections import defaultdict

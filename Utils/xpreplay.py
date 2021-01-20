@@ -1,3 +1,5 @@
+#Implemented experience replay for its use in Deep RL agents
+
 from collections import namedtuple
 from collections import deque
 import numpy as np

@@ -1,15 +1,19 @@
-#Running validation results
+#Running validation results for saved agents
+
 import os
-import gym
-import sys
-import numpy as np
-import matplotlib.pyplot as plt
-from envs import Model1
-from validation import validation_experiment
 import pickle
-from Utils.utils import *
-from Utils.plot_utils import *
+import sys
 from datetime import datetime
+
+import gym
+import matplotlib.pyplot as plt
+import numpy as np
+
+from envs.envs_tabular import Model1
+from Utils.plot_utils import *
+from Utils.utils import *
+from Utils.validation import validation_experiment
+
 time = datetime.now().strftime('%m%d_%H%M')
 sys.path.append('../')
 

@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-def discrete_env(state, modulus, s, upper_bounds, stochasticity = True):
+def discrete_env(state, modulus, time_step, upper_bounds, stochasticity = True):
     """
     Discretisation of the system
     """  
@@ -39,7 +39,7 @@ def discrete_env(state, modulus, s, upper_bounds, stochasticity = True):
         decimal = f[::-1].find('.')  
         state[i] = np.round(state[i], decimal)
 
-    state = (*tuple(state), s)
+    state = (*tuple(state), time)
 
     return state
 

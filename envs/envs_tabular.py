@@ -1,4 +1,4 @@
-#RL for control, environment class
+#RL for control, environment class V1
 #27.12.2020
 import numpy as np
 

@@ -1,4 +1,4 @@
-# Plotting functions
+# Plotting utility functions
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
 import scipy.integrate as scp

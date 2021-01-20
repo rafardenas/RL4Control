@@ -1,24 +1,26 @@
-#Running experiments
-#28.12.2020
+#28.12.2020 / 19.01.2021
+#Training script for the tabular Reinfocement Learning agents.
 import os
-import gym
 import sys
-import numpy as np
-import matplotlib.pyplot as plt
-from agents import Monte_Carlo, Q_Learning
-from envs import Model1
-from experiment import Experiment
-from validation import validation_experiment
-from utils import *
 from datetime import datetime
+
+import gym
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+#from Utils.utils import *
+
+from agents import Monte_Carlo, Q_Learning
+from envs.envs_tabular import Model1
+from experiment import Experiment
+
 time = datetime.now().strftime('%m%d_%H%M')
 sys.path.append('../')
 
-
 params   = {'u_m' : 0.0923*0.62, 'K_N' : 393.10, 'u_d' : 0.01, 'Y_nx' : 504.49}       
 steps_   = np.array([10])       #or movements                                                    
-tf       = 16.*24                                                 
-x0       = np.array([0.5,150.])
+tf       = 16.*24               #final time (?)                                  
+x0       = np.array([0.5,150.]) #have to make sure initial state is also multiple of the grid
 modulus  = np.array([0.05, 10]) #granularity of the states discretisation                                                                 # line distance of state space
 state_UB = np.array([5, 1000])  # state space upper bound
 
@@ -82,7 +84,7 @@ def single_run(save_agent = True, save_plot = False):
     Plotting(reward_train_mean, nrows, bracket, agent_name, agent_name, xi=xi_[0], save_plot = save_plot)
 
 
-single_run(save_agent=False, save_plot= False)
+#single_run(save_agent=False, save_plot= False)
 
 
 #run the following function to make a 2x2 grid of reward plots based on different decays rates
@@ -112,5 +114,4 @@ def grid(save_plot = False):
     plt.show()
 
 #grid()
-
 
