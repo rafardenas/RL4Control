@@ -7,7 +7,7 @@ Nowadays, researchers have turned their attention to domains where safety is a t
 
 This repository is my (little) contribution towards spreading RL in the Chemical Engineering field. Concretely, I have layed here the foundations of what I envision to be a library that would help researchers in this area to run quick experiments, compare results and even, develop new techinques. In short, like [OpenAI Gym](https://gym.openai.com/), but for Chemical Engineering.
 
-To my knowledge, no library of this kind has yet been proposed, although it is very likely that other people is already working in something similar.
+To my knowledge, no library of this kind has been proposed yet, although it is very likely that other people is already working in something similar.
 
 At the moment, only commonly used algorithms and techniques are available, (Deep Q Network, experience replay, tabular methods), with time, more environments and algorithms will be added.
 I am currently working on one implementation of safe RL based on Gaussian Processes, this addition will be the first step towards the introduction of safe RL techniques to the library which, in the worst case, would serve as examples for the newcomers. 
