@@ -11,7 +11,7 @@ To my knowledge, no library of this kind has been proposed yet, although it is v
 
 At the moment, only commonly used algorithms and techniques are available, (Deep Q Network, experience replay, tabular methods), with time, more environments and algorithms will be added.
 I am currently working on one implementation of safe RL based on Gaussian Processes, this addition will be the first step towards the introduction of safe RL techniques to the library which, in the worst case, would serve as examples for the newcomers. 
-The latter proposition takes care of the need of reliable and clear resources about Safe RL, something that I would have liked to have when I started to learn about safe RL.
+The latter proposition takes care of the need of reliable and clear resources about Safe RL, something that I would have liked to have when I started to learn about it.
 
 The long term vision of this library is to serve as a reference of RL in chemical engineering and a vehicle to distribute the breakthroughs of RL in Chemical Engineering among the ML community.
 
