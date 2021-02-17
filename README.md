@@ -1,7 +1,7 @@
 # RL4Control
-#### Control of Chemical Processes with RL
+#### Control of Chemical Processes with Reinforcement Learning
 
-Reinforcement Learning has sparked the interest of awesome minds around the world and as a result huge advacements have been made in the last decade, but mostly in applications in which we can afford to fail *quickly and safely* such as videogames or robotics (to a lesser extend).
+Reinforcement Learning(RL) has sparked the interest of awesome minds around the world and as a result huge advacements have been made in the last decade, but mostly in applications in which we can afford to fail *quickly and safely* such as videogames or robotics (to a lesser extend).
 
 Nowadays, researchers have turned their attention to domains where safety is a top priority. Examples of those applications are almost everywhere, from self-driving cars and unmanned aerial vehicles to use cases in the *classical* manufacturing industries: Chemical, manufacturing.
 
