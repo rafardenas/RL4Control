@@ -10,12 +10,12 @@ import numpy as np
 import torch
 #from Utils.utils import *
 
-from agents import Monte_Carlo, Q_Learning
+sys.path.append('./')
+from agents.tabular_agents import Monte_Carlo, Q_Learning
 from envs.envs_tabular import Model1
 from experiment import Experiment
 
 time = datetime.now().strftime('%m%d_%H%M')
-sys.path.append('../')
 
 params   = {'u_m' : 0.0923*0.62, 'K_N' : 393.10, 'u_d' : 0.01, 'Y_nx' : 504.49}       
 steps_   = np.array([10])       #or movements                                                    

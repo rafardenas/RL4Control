@@ -4,21 +4,22 @@ import os
 import pickle
 import sys
 from datetime import datetime
+sys.path.append('./')
 
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
 from envs.envs_tabular import Model1
-from Utils.plot_utils import *
-from Utils.utils import *
-from Utils.validation import validation_experiment
+from utils.plot_utils import *
+from utils.utils import *
+from utils.validation import validation_experiment
 
 time = datetime.now().strftime('%m%d_%H%M')
-sys.path.append('../')
 
-path = 'RL4Control/Assets/Q_learning_0106_1421_agent.pkl'
-trained_agent = pickle.load(open(path,'rb')) #load the agent (change the name)
+#uncoment and add path to save the agent's pickle file
+#path = 'RL4Control/Assets/Q_learning_0106_1421_agent.pkl'
+trained_agent = None #pickle.load(open(path,'rb')) #load the agent (change the name)
 
 params   = {'u_m' : 0.0923*0.62, 'K_N' : 393.10, 'u_d' : 0.01, 'Y_nx' : 504.49}       
 steps_   = np.array([10])       #or movements                                                    

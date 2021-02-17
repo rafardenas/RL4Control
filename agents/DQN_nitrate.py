@@ -13,14 +13,14 @@ import torch.nn.functional as F
 from scipy.optimize import minimize
 from scipy.spatial.distance import cdist
 from torch import nn
-
-#importing auxiliary functions
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+sys.path.append('./')
+#importing auxiliary functions and classes
+#PACKAGE_PARENT = '..'
+#SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+#sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from envs.env_DRL import Model2
-from Utils.deep_utils import Linearexp
-from Utils.xpreplay import xpreplay
+from utils.deep_utils import Linearexp
+from utils.xpreplay import xpreplay
 
 
 class Experiment:
@@ -223,6 +223,9 @@ Net1, Net2  = NN_use_case(batch_size, num_actions), NN_use_case(batch_size, num_
 agent       = DQN_agent(Net1, Net2)
 replay      = xpreplay(c.buffer_size, c.batch_size)
 exper       = Experiment(env, agent, c, explore, replay)
+
+
+#uncomment to run
 """
 loss, control_actions, avg_reward, a = exper.train()
 #print(loss, control_actions, avg_reward)

@@ -1,5 +1,5 @@
 #RL for control, environment class V2. 
-#The classes contained in envs_tabular.py were refractored to seamless use with Deep RL agents
+#The classes contained in envs_tabular.py were refractored to seamless usage with Deep RL agents
 #19.01.2021 - Rafael C.
 import numpy as np
 import os
@@ -11,7 +11,6 @@ PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 #importing auxiliary functions
-from Utils.utils import discrete_env, eps_decay
 import scipy.integrate as scp
 import pickle
 
@@ -25,7 +24,7 @@ import pickle
 
 class Environment2:
     r"""
-    Base class for the environment, its children are, e.g. the dynamics of different reactions.
+    Base class for the environment
     Attributes:
         params(dic): parameters of the diff equations for the dynamics
         steps(int): number of discrete intervals in one episode (take it as equivalent of 'movements' in Agent's class, aka one movement per step)  
@@ -53,7 +52,7 @@ class Model2(Environment2):
         super(Model2, self).__init__(parameters, steps, tf, x0, control, modulus, state_UB, noisy = False)
         self.dt = tf/steps
         
-    def response(self, t, state, control):  #what is 't'?
+    def response(self, t, state, control):  #what is 't'? #change response to model
         params = self.parameters
         FCn   = control   
         # state vector [Cx, Cn]
@@ -86,7 +85,7 @@ class Model2(Environment2):
         return state
 
     def transition(self, state, action):
-        action = self.control[action]
+        action = self.control[action] #in the case of a discrete action space
         #print(state, action)
         self.time_step += 1
         ode   = scp.ode(self.response)                               # define ode, using model defined as np array
@@ -98,40 +97,3 @@ class Model2(Environment2):
         reward = self.single_reward(state)
         next_state = np.array((next_state) + noise).round(1)
         return next_state, reward, self.time_step
-
-
-    def discrete_env(self, state, time_step, stochasticity = True):
-        """
-        Discretisation of the state
-        """  
-        resid = state % self.modulus     
-        resid = resid/self.modulus       
-        UB = 1 - resid              
-        
-        if stochasticity:
-            draw = np.random.randint(0,2, state.shape[0])
-            for i in range(state.shape[0]):
-                if draw[i] < UB[i]:
-                    state[i] = state[i] - resid[i] * self.modulus[i]
-                else:
-                    state[i] = state[i] - resid[i] * self.modulus[i] + self.modulus[i]
-        else:
-            state[i] = state[i] - resid[i] * self.modulus[i]
-
-        #Rouding precision errors for purpose of key values
-        for i in range(len(state)):
-            if state[i] < 0:
-                state[i] = 0
-            elif state[i] < self.modulus[i]/2:
-                state[i] = 0
-            elif state[i] > self.upper_bounds[i]:
-                state[i] = self.upper_bounds[i]
-        
-
-            f = str(self.modulus[i])
-            decimal = f[::-1].find('.')  
-            state[i] = np.round(state[i], decimal)
-
-        state = (*tuple(state), time_step)
-
-        return state

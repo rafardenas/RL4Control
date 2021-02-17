@@ -13,15 +13,16 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+#PACKAGE_PARENT = '..'
+#SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+#sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+sys.path.append('./')
 from config.linearDQN import Lin_config
 from envs.test_env import EnvTest
-from Utils.deep_utils import Linearexp
-from Utils.plot_utils import *
-from Utils.utils import *
-from Utils.xpreplay import xpreplay
+from utils.deep_utils import Linearexp
+from utils.plot_utils import *
+from utils.utils import *
+from utils.xpreplay import xpreplay
 
 #################################################
 ############Pending: Set 'done' flag for terminal states
@@ -217,17 +218,17 @@ replay = xpreplay(Lin_config.buffer_size, Lin_config.batch_size)
 
 DQNexp = DQN_experiment(Net1, Net2, env, explor_sch, batch_size, num_actions, Lin_config, replay)
 
-tr_losses, tr_q_values, training_rew, lrs = DQNexp.run_training(decay=True)
+#tr_losses, tr_q_values, training_rew, lrs = DQNexp.run_training(decay=True)
 #print(tr_losses)
 #print(tr_q_values)
 #print(training_rew)
-rewards_eval, q_vals_ev = DQNexp.run_validation()
+#rewards_eval, q_vals_ev = DQNexp.run_validation()
 
 
-plot_loss_function(tr_losses)
-plot_reward(training_rew)
-plot_reward(rewards_eval)
-plot_loss_function(lrs)
+#plot_loss_function(tr_losses)
+#plot_reward(training_rew)
+#plot_reward(rewards_eval)
+#plot_loss_function(lrs)
 
 
 

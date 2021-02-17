@@ -5,11 +5,11 @@ import gym
 import sys
 from scipy.spatial.distance import cdist
 from scipy.optimize import minimize
-from Utils.utils import discrete_env, eps_decay
+sys.path.append('./')
+from utils.utils import discrete_env, eps_decay
 import scipy.integrate as scp
 import numpy as np
 import pickle
-sys.path.append('../')
 
 class Experiment:
     """
